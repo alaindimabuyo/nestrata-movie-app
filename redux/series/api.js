@@ -76,6 +76,34 @@ export const authenticationApi = baseAPI.injectEndpoints({
       }),
       transformResponse: response => response.movie,
     }),
+    searchMovies: build.query({
+      query: text => ({
+        body: gql`
+          query {
+            searchMovies(query: "${text}", page: 1) {
+              results {
+                id
+                title
+                original_title
+                name
+                overview
+                release_date
+                poster_path
+                credits {
+                  cast {
+                    name
+                    character
+                    profile_path
+                    id
+                  }
+                }
+              }
+            }
+          }
+        `,
+      }),
+      transformResponse: response => response.searchMovies.results,
+    }),
   }),
   overrideExisting: false,
 });
@@ -84,4 +112,6 @@ export const {
   useGetUpcomingMoviesQuery,
   useGetNowPlayingMoviesQuery,
   useGetMainMovieQuery,
+  useSearchMoviesQuery,
+  useLazySearchMoviesQuery,
 } = authenticationApi;

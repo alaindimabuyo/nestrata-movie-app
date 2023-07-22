@@ -2,7 +2,7 @@ import {createSelector} from '@reduxjs/toolkit';
 
 export const selectSelf = store => store.series;
 
-export const selectUpcomingMovies = createSelector(
+export const selectSearchedMovies = createSelector(
   selectSelf,
-  state => state.confirm,
+  state => state.searchedMovies,
 );

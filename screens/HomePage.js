@@ -15,6 +15,7 @@ import {
   useGetNowPlayingMoviesQuery,
   useGetUpcomingMoviesQuery,
 } from '../redux/series/api';
+import {selectors, useSelector} from '../redux/index';
 import MainMovie from '../components/MainMovie';
 const HomePage = () => {
   const [UpcomingMoviepage, setUpcomingMoviePage] = useState(1);
@@ -38,15 +39,24 @@ const HomePage = () => {
     refetchOnMountOrArgChange: true,
   });
 
+  const selectSearchedMovies = useSelector(
+    selectors.series.selectSearchedMovies,
+  );
+
   return (
     <ScrollView style={styles.container}>
       <SearchComponent />
       <MainMovie />
-      <View style={styles.section}>
-        <Text style={styles.mainText}>Categories</Text>
-        <Text style={styles.secondaryText}>View All</Text>
-      </View>
-      <GenreTags />
+      {selectSearchedMovies.length < 1 && (
+        <>
+          <View style={styles.section}>
+            <Text style={styles.mainText}>Categories</Text>
+            <Text style={styles.secondaryText}>View All</Text>
+          </View>
+          <GenreTags />
+        </>
+      )}
+
       <View style={styles.section}>
         <Text style={styles.mainText}>Latest Movie</Text>
         <Text style={styles.secondaryText}>View All</Text>
