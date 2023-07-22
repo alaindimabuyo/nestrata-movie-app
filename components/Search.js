@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Replace 'FontAwesome' with the desired icon library
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const SearchComponent = () => {
   return (
@@ -10,7 +10,6 @@ const SearchComponent = () => {
         placeholder="Search Movie"
         style={styles.input}
         placeholderTextColor="#707071"
-        // Add your search logic here (e.g., onChangeText, onSubmitEditing, etc.)
       />
     </View>
   );
