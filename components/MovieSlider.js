@@ -1,8 +1,18 @@
 // components/UpcomingMovies.js
 import React from 'react';
-import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const UpcomingMovies = ({data, error, isLoadin, refetch, setPage}) => {
+  const navigation = useNavigation();
+
   if (isLoadin) {
     return <Text>Loading...</Text>;
   }
@@ -13,16 +23,20 @@ const UpcomingMovies = ({data, error, isLoadin, refetch, setPage}) => {
 
   const renderItem = ({item}) => (
     <View style={styles.movieContainer}>
-      <Image
-        source={{uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`}}
-        style={styles.moviePoster}
-      />
-      <Text style={styles.movieTitle}>{item.title}</Text>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('MovieDetails', {movieID: item?.id})
+        }>
+        <Image
+          source={{uri: `https://image.tmdb.org/t/p/w500/${item.poster_path}`}}
+          style={styles.moviePoster}
+        />
+      </TouchableOpacity>
     </View>
   );
   const handleLoadMore = () => {
-    setPage(prevPage => prevPage + 1);
-    refetch();
+    setPage && setPage(prevPage => prevPage + 1);
+    refetch && refetch();
   };
 
   return (

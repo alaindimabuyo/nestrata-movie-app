@@ -2,10 +2,12 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {useGetMainMovieQuery} from '../redux/series/api';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useNavigation} from '@react-navigation/native';
 
 const MainMovie = () => {
   const [id, setID] = useState(5);
   const {data, error, isLoadin} = useGetMainMovieQuery(id);
+  const navigation = useNavigation();
 
   if (isLoadin) {
     return <Text>Loading...</Text>;
@@ -15,7 +17,6 @@ const MainMovie = () => {
     return <Text>Error: {error.message}</Text>;
   }
 
-  console.log('MAINMOVIE', data);
   return (
     <View>
       <View style={styles.movieContainer}>
@@ -34,7 +35,11 @@ const MainMovie = () => {
             <Text style={styles.buttonText}>Play</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate('MovieDetails', {movieID: data?.id})
+            }>
             <Icon name="info-circle" size={20} color="#fff" />
             <Text style={styles.buttonText}>Details</Text>
           </TouchableOpacity>

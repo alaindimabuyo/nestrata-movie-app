@@ -49,7 +49,27 @@ export const authenticationApi = baseAPI.injectEndpoints({
               title,
               original_title,
               name,
-              poster_path
+              poster_path,
+              release_date,
+              backdrop_path,
+              vote_average,
+              homepage,
+              overview,
+              runtime,
+              popularity,
+              genres{
+                id,
+                name
+              },
+              credits{
+                id,
+                cast{
+                  name,
+                  character,
+                  profile_path,
+                  id,
+              },
+              }
             }
           }
         `,

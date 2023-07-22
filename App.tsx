@@ -11,6 +11,8 @@ import HomePage from './screens/HomePage';
 import Profile from './screens/Profile';
 import Games from './screens/Games';
 import Trending from './screens/Trending';
+import MovieDetails from './screens/MovieDetails';
+import CastDetails from './screens/CastDetails';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -115,6 +117,8 @@ function App(): JSX.Element {
         <NavigationContainer theme={NestrataTheme}>
           <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name="HomeTabs" component={HomeTabs} />
+            <Stack.Screen name="MovieDetails" component={MovieDetails} />
+            <Stack.Screen name="CastDetails" component={CastDetails} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
