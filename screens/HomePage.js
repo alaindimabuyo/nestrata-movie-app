@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Button,
   StyleSheet,
@@ -6,25 +6,70 @@ import {
   TouchableOpacity,
   View,
   Image,
+  ScrollView,
 } from 'react-native';
 import SearchComponent from '../components/Search';
 import GenreTags from '../components/GenreTags';
+import MovieSlider from '../components/MovieSlider';
+import {
+  useGetNowPlayingMoviesQuery,
+  useGetUpcomingMoviesQuery,
+} from '../redux/series/api';
+import MainMovie from '../components/MainMovie';
 const HomePage = () => {
+  const [UpcomingMoviepage, setUpcomingMoviePage] = useState(1);
+  const [NowPlayingPage, setNowPlayingPage] = useState(1);
+
+  const {
+    data: upcomingMoviesData,
+    error: upcomingMoviesError,
+    isLoadin: upcomingMoviesLoading,
+    refetch: upcomingMoviesRefetch,
+  } = useGetUpcomingMoviesQuery(UpcomingMoviepage, {
+    refetchOnMountOrArgChange: true,
+  });
+
+  const {
+    data: nowPlayingMoviesData,
+    error: nowPlayingMoviesError,
+    isLoadin: nowPlayingMoviesLoading,
+    refetch: nowPlayingMoviesRefetch,
+  } = useGetNowPlayingMoviesQuery(NowPlayingPage, {
+    refetchOnMountOrArgChange: true,
+  });
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Welcome Nestrata</Text>
-      <Text style={styles.text}>Lets Relax and Watch a Movie</Text>
+    <ScrollView style={styles.container}>
       <SearchComponent />
+      <MainMovie />
       <View style={styles.section}>
-        <Text style={styles.text}>Categories</Text>
-        <Text style={styles.text}>View All</Text>
+        <Text style={styles.mainText}>Categories</Text>
+        <Text style={styles.secondaryText}>View All</Text>
       </View>
       <GenreTags />
       <View style={styles.section}>
-        <Text style={styles.text}>Latest Movie</Text>
-        <Text style={styles.text}>View All</Text>
+        <Text style={styles.mainText}>Latest Movie</Text>
+        <Text style={styles.secondaryText}>View All</Text>
       </View>
-    </View>
+      <MovieSlider
+        data={nowPlayingMoviesData}
+        error={nowPlayingMoviesError}
+        isLoadin={nowPlayingMoviesLoading}
+        refetch={nowPlayingMoviesRefetch}
+        setPage={setNowPlayingPage}
+      />
+      <View style={styles.section}>
+        <Text style={styles.mainText}>Upcoming Movies</Text>
+        <Text style={styles.secondaryText}>View All</Text>
+      </View>
+      <MovieSlider
+        data={upcomingMoviesData}
+        error={upcomingMoviesError}
+        isLoadin={upcomingMoviesLoading}
+        refetch={upcomingMoviesRefetch}
+        setPage={setUpcomingMoviePage}
+      />
+    </ScrollView>
   );
 };
 
@@ -32,10 +77,19 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
   },
+  mainText: {
+    color: '#fff',
+    fontSize: 20,
+  },
+  secondaryText: {
+    color: '#d16b23',
+    fontSize: 12,
+  },
   container: {
     margin: 20,
   },
   section: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

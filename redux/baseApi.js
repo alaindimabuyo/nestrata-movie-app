@@ -1,0 +1,34 @@
+// Or from '@reduxjs/toolkit/query' if not using the auto-generated hooks
+import {
+  BaseQueryFn,
+  createApi,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
+import {request, gql, ClientError} from 'graphql-request';
+// Define the GraphQL endpoint
+const API_ENDPOINT = 'https://tmdb-one-blue.vercel.app/api/graphql';
+
+const graphqlBaseQuery =
+  ({baseUrl}) =>
+  async ({body}) => {
+    try {
+      const result = await request(baseUrl, body);
+      return {data: result};
+    } catch (error) {
+      if (error instanceof ClientError) {
+        return {error: {status: error.response.status, data: error}};
+      }
+      return {error: {status: 500, data: error}};
+    }
+  };
+
+// initialize an empty api service that we'll inject endpoints into later as needed
+const baseAPI = createApi({
+  reducerPath: 'nestrata-query',
+  baseQuery: graphqlBaseQuery({
+    baseUrl: API_ENDPOINT,
+  }),
+  endpoints: build => ({}),
+});
+
+export default baseAPI;
