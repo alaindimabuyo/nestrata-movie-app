@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 const Trending = () => {
   return (
     <View style={styles.container}>

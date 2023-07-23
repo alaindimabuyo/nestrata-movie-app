@@ -4,7 +4,7 @@ import {useGetMainMovieQuery} from '../redux/series/api';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import {selectors, useSelector} from '../redux/index';
-import MovieSlider from './MovieSlider';
+import SearchResults from './SearchResults';
 const MainMovie = () => {
   const [id, setID] = useState(5);
   const {data, error, isLoadin} = useGetMainMovieQuery(id);
@@ -24,7 +24,7 @@ const MainMovie = () => {
 
   return (
     <View>
-      {selectSearchedMovies.length < 1 ? (
+      {selectSearchedMovies?.length < 1 ? (
         <View style={styles.movieContainer}>
           <Image
             source={{
@@ -56,7 +56,7 @@ const MainMovie = () => {
       ) : (
         <View>
           <Text style={styles.mainText}>Top Results</Text>
-          <MovieSlider
+          <SearchResults
             data={selectSearchedMovies}
             error={error}
             isLoadin={isLoadin}

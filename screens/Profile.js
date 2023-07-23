@@ -1,18 +1,24 @@
 import React from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
+import SearchComponent from '../components/Search';
+import {selectors, useSelector} from '../redux/index';
+import SearchResults from '../components/SearchResults';
+
 const Profile = () => {
+  const selectedSearchedPerson = useSelector(
+    selectors?.person?.selectSearchedPerson,
+  );
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.mainText}>Coming Soon</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <SearchComponent isActor={true} />
+      <SearchResults
+        data={selectedSearchedPerson}
+        error={false}
+        isLoadin={false}
+        isActor={true}
+      />
+    </ScrollView>
   );
 };
 
@@ -22,9 +28,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   container: {
-    height: '100%',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    margin: 20,
   },
 });
 export default Profile;

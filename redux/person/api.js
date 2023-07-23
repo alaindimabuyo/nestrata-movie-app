@@ -31,8 +31,35 @@ export const authenticationApi = baseAPI.injectEndpoints({
       }),
       transformResponse: response => response.person,
     }),
+    searchPerson: build.query({
+      query: text => ({
+        body: gql`
+          query {
+            searchPerson(query: "${text}", page: 1) {
+              results{
+                id,
+               	name,
+                biography,
+                birthday,
+                deathday,
+                place_of_birth,
+                profile_path,
+                cast{
+                  name,
+                  poster_path,
+                  id,
+                  title,
+                  original_title
+                }
+              }
+            }
+          }
+        `,
+      }),
+      transformResponse: response => response.searchPerson.results,
+    }),
   }),
   overrideExisting: false,
 });
 
-export const {useGetCastDetailsQuery} = authenticationApi;
+export const {useSearchPersonQuery, useGetCastDetailsQuery} = authenticationApi;

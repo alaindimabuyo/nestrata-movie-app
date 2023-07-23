@@ -22,7 +22,6 @@ const graphqlBaseQuery =
     }
   };
 
-// initialize an empty api service that we'll inject endpoints into later as needed
 const baseAPI = createApi({
   reducerPath: 'nestrata-query',
   baseQuery: graphqlBaseQuery({

@@ -40,45 +40,45 @@ const HomePage = () => {
   });
 
   const selectSearchedMovies = useSelector(
-    selectors.series.selectSearchedMovies,
+    selectors?.series?.selectSearchedMovies,
   );
 
   return (
     <ScrollView style={styles.container}>
       <SearchComponent />
       <MainMovie />
-      {selectSearchedMovies.length < 1 && (
+      {selectSearchedMovies?.length < 1 && (
         <>
           <View style={styles.section}>
             <Text style={styles.mainText}>Categories</Text>
             <Text style={styles.secondaryText}>View All</Text>
           </View>
           <GenreTags />
+
+          <View style={styles.section}>
+            <Text style={styles.mainText}>Latest Movie</Text>
+            <Text style={styles.secondaryText}>View All</Text>
+          </View>
+          <MovieSlider
+            data={nowPlayingMoviesData}
+            error={nowPlayingMoviesError}
+            isLoadin={nowPlayingMoviesLoading}
+            refetch={nowPlayingMoviesRefetch}
+            setPage={setNowPlayingPage}
+          />
+          <View style={styles.section}>
+            <Text style={styles.mainText}>Upcoming Movies</Text>
+            <Text style={styles.secondaryText}>View All</Text>
+          </View>
+          <MovieSlider
+            data={upcomingMoviesData}
+            error={upcomingMoviesError}
+            isLoadin={upcomingMoviesLoading}
+            refetch={upcomingMoviesRefetch}
+            setPage={setUpcomingMoviePage}
+          />
         </>
       )}
-
-      <View style={styles.section}>
-        <Text style={styles.mainText}>Latest Movie</Text>
-        <Text style={styles.secondaryText}>View All</Text>
-      </View>
-      <MovieSlider
-        data={nowPlayingMoviesData}
-        error={nowPlayingMoviesError}
-        isLoadin={nowPlayingMoviesLoading}
-        refetch={nowPlayingMoviesRefetch}
-        setPage={setNowPlayingPage}
-      />
-      <View style={styles.section}>
-        <Text style={styles.mainText}>Upcoming Movies</Text>
-        <Text style={styles.secondaryText}>View All</Text>
-      </View>
-      <MovieSlider
-        data={upcomingMoviesData}
-        error={upcomingMoviesError}
-        isLoadin={upcomingMoviesLoading}
-        refetch={upcomingMoviesRefetch}
-        setPage={setUpcomingMoviePage}
-      />
     </ScrollView>
   );
 };
